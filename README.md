@@ -75,6 +75,21 @@ arma::mat test7(int n){
 }
 ```
 Note: things like arma::field<arma::mat::fixed<10,10>> do not work. This is the workaround.
+Another tedious workaround:
+
+```
+//[[Rcpp::depends(RcppArmadillo)]]
+//[[Rcpp::export]]
+arma::mat test9(int n){
+  arma::field<arma::mat::fixed<10,10>::fixed> AA(4,4);
+  arma::mat::fixed<10,10> BB;
+  BB.fill(0.5);
+  arma::mat CC(10,10,arma::fill::eye);
+  AA.fill(BB);
+  //AA(1,2)=CC;
+  return(AA(1,2));
+}
+```
 
 ### Bound check
 
