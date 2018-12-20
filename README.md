@@ -130,3 +130,13 @@ FC=ccache gfortran$(VER)
 #FC=gfortran
 F77=$(CCACHE) gfortran$(VER)
 where VER is currently empty as 4.9 is the default. Now if you re-build the same package over and over, the compile-time is very fast as unchanged code leads to object files being retrieved.
+
+
+Original:
+```
+FLIBS=-L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
+```
+
+OpenMP flags:
+https://gist.github.com/zkamvar/9a7c4b8251a0a662f214
+By zkamvar (Zhian N. Kamvar)
