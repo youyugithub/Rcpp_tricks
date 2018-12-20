@@ -140,6 +140,18 @@ Original:
 FLIBS=-L/usr/local/gfortran/lib/gcc/x86_64-apple-darwin16/6.3.0 -L/usr/local/gfortran/lib -lgfortran -lquadmath -lm
 ```
 
+Alternatively, use Rcpp11:
+
+http://webcache.googleusercontent.com/search?q=cache:bz78FjVobTMJ:https://www.r-bloggers.com/user2014-rcpp11-tutorial/&hl=en&gl=us&strip=1&vwsrc=0
+
+By Romain Francois
+
+```
+devtools::install_github("Rcpp11/Rcpp11")
+devtools::install_github("Rcpp11/attributes")
+```
+
+### OPENMP
 OpenMP flags:
 https://gist.github.com/zkamvar/9a7c4b8251a0a662f214
 By zkamvar (Zhian N. Kamvar)
