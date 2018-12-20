@@ -121,6 +121,7 @@ The best trick I know is to deploy the awesome frontend ccache which most Linux 
 
 So in ~/.R/Makevars I have
 
+```
 VER=
 CCACHE=ccache
 CC=$(CCACHE) gcc$(VER)
@@ -130,7 +131,9 @@ FC=ccache gfortran$(VER)
 #FC=gfortran
 F77=$(CCACHE) gfortran$(VER)
 where VER is currently empty as 4.9 is the default. Now if you re-build the same package over and over, the compile-time is very fast as unchanged code leads to object files being retrieved.
+```
 
+To install ccache on MacOS: brew install ccache
 
 Original:
 ```
