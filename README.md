@@ -111,3 +111,22 @@ Secondly I changed the counters of the loops from int to uword.
 
 Finally I used the function .at() to disable the bound checking.
 
+### Increase Rcpp compile speed
+
+https://stackoverflow.com/questions/31305963/increase-rcpp-compile-speed
+
+By Dirk Eddelbuettel
+
+The best trick I know is to deploy the awesome frontend ccache which most Linux distros have, and which OS X has too (in Brew IIRC). It can be used with both g++ and clang.
+
+So in ~/.R/Makevars I have
+
+VER=
+CCACHE=ccache
+CC=$(CCACHE) gcc$(VER)
+CXX=$(CCACHE) g++$(VER)
+SHLIB_CXXLD=g++$(VER)
+FC=ccache gfortran$(VER)
+#FC=gfortran
+F77=$(CCACHE) gfortran$(VER)
+where VER is currently empty as 4.9 is the default. Now if you re-build the same package over and over, the compile-time is very fast as unchanged code leads to object files being retrieved.
