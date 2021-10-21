@@ -155,3 +155,27 @@ devtools::install_github("Rcpp11/attributes")
 OpenMP flags:
 https://gist.github.com/zkamvar/9a7c4b8251a0a662f214
 By zkamvar (Zhian N. Kamvar)
+
+### passing cube & field
+```
+#include <RcppArmadillo.h>
+using namespace Rcpp;
+//[[Rcpp::depends(RcppArmadillo)]]
+//[[Rcpp::export]]
+arma::field<arma::vec> test_field(arma::field<arma::vec> xx){
+  return(xx);
+}  
+
+//[[Rcpp::depends(RcppArmadillo)]]
+//[[Rcpp::export]]
+arma::cube test_cube(arma::cube xx){
+  return(xx);
+}  
+```
+
+```
+sourceCpp("Rcpp/test.cpp")
+test_cube(array(1:24,c(2,3,4)))
+test_cube(array(1:24,c(2,3,4)))
+test_field(list(2:4,3:5))
+```
