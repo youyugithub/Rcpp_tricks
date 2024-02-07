@@ -179,3 +179,79 @@ test_cube(array(1:24,c(2,3,4)))
 test_cube(array(1:24,c(2,3,4)))
 test_field(list(2:4,3:5))
 ```
+
+### convert between rcpp and arma
+
+https://stackoverflow.com/questions/14253069/convert-rcpparmadillo-vector-to-rcpp-vector
+```
+as<NumericVector>(wrap(a))
+NumericVector(a.begin(),a.end())
+```
+```
+#include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
+using namespace Rcpp;
+// [[Rcpp::export]]
+NumericVector vec_to_numericvector(arma::vec x) {
+  NumericVector x2=as<NumericVector>(wrap(x));
+  return x2;
+}
+// [[Rcpp::export]]
+LogicalVector vec_to_logicalvector(arma::uvec x) {
+  LogicalVector x2=as<LogicalVector>(wrap(x));
+  return x2;
+}
+// [[Rcpp::export]]
+NumericVector vec_to_numericvector2(arma::vec x) {
+  return NumericVector(x.begin(),x.end());
+}
+// [[Rcpp::export]]
+LogicalVector vec_to_logicalvector2(arma::uvec x) {
+  return LogicalVector(x.begin(),x.end());
+}
+```
+
+## nan in arma
+
+```
+#include <RcppArmadillo.h>
+// [[Rcpp::depends(RcppArmadillo)]]
+using namespace Rcpp;
+// [[Rcpp::export]]
+arma::uvec arma_find_finite(arma::vec x) {
+  return arma::find_finite(x); // inf not finite, nan not finite, na not finite
+}
+// [[Rcpp::export]]
+arma::uvec arma_find_nonfinite(arma::vec x) {
+  return arma::find_nonfinite(x); // inf not finite, nan not finite, na not finite
+}
+// [[Rcpp::export]]
+arma::uvec arma_find_nan(arma::vec x) {
+  return arma::find_nan(x); // nan not finite, na not finite
+}
+// [[Rcpp::export]]
+arma::uvec arma_find_non_positive(arma::vec x) {
+  return arma::find(x<=0.0);
+}
+// [[Rcpp::export]]
+arma::umat factor_combinations(arma::uword nfactor) {
+  arma::uword nsplit=std::pow(2,nfactor-1);
+  arma::umat factor_combinations=arma::umat(nsplit,nfactor);
+  arma::uword ii,kk;
+  for(ii=0;ii<nsplit;ii++){
+    for(kk=0;kk<nfactor;kk++){
+      factor_combinations(ii,kk)=(ii&(1<<kk))!=0;
+    }
+  }
+  return factor_combinations;
+}
+// [[Rcpp::export]]
+arma::uvec arma_not(arma::uvec x) {
+  return(x==0);
+}
+// [[Rcpp::export]]
+arma::uvec arma_not_nan(arma::vec x) {
+  return(x<=arma::datum::inf); // nan and na returns false
+}
+
+```
